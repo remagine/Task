@@ -12,6 +12,10 @@ public class Tag implements Comparable<Tag>{
         this.id = id;
     }
 
+    public static Tag from(String input){
+        return new Tag(Integer.parseInt(input));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -32,6 +32,7 @@ public class Main {
                     String commandString = arguments[0];
                     commandType = CommandType.from(commandString);
                     String number = arguments[1];
+                    Tag tag = Tag.from(number);
                 }
 
                 if (arguments.length == 1) {
@@ -41,13 +42,6 @@ public class Main {
 
                 Command command = commandFactory.get(commandType);
                 command.execute();
-
-
-
-
-
-
-
 
             }
 
