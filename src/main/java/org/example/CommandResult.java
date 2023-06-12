@@ -1,3 +1,5 @@
+package org.example;
+
 /**
  * dto
  * isSuccess : 실패 여부
