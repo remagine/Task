@@ -24,7 +24,7 @@ public class Main {
              InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
              BufferedReader br = new BufferedReader(isr, 8192);
         ) {
-            // 인프라 객체들
+            // 인프라
             CommandFactory commandFactory = CommandFactory.getInstance();
             PriorityQueue<Tag> availableTags = Tag.initAvailableTags();
             Set<Tag> executableTags = Tag.initExecutableTags();
@@ -54,13 +54,14 @@ public class Main {
                     commandType = CommandType.from(commandString);
                 }
 
-
                 // 처리의 입력 생성
                 Command command = commandFactory.get(commandType, tag, availableTags, executableTags);
                 CommandResult commandResult = command.execute();
 
+                // CommonResult 의 역할은? dto
                 // 실패를 집계해야 하는데
                 // 집계는 누구의 책임인가? Tag?
+                //
 
 
             }
