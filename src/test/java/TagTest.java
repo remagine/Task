@@ -1,5 +1,5 @@
 import java.util.PriorityQueue;
-import org.example.Tag;
+import org.example.tag.Tag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

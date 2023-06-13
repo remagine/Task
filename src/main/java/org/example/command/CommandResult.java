@@ -1,4 +1,6 @@
-package org.example;
+package org.example.command;
+
+import org.example.tag.Tag;
 
 /**
  * dto
@@ -21,11 +23,11 @@ public class CommandResult {
     // true, false가 아니라 String이 규칙이 될 수 도 있다.
     // 실패라는 개념 자체가 중요하다. 이것을 자꾸 외부에 노출하면 안된다
     // 단순 dto이기 때문에 getter가 필요
-    public CommandResult success(Tag tag){
+    public static CommandResult success(Tag tag){
         return new CommandResult(true, tag);
     }
 
-    public CommandResult fail(Tag tag){
+    public static CommandResult fail(Tag tag){
         return new CommandResult(false, tag);
     }
 

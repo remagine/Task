@@ -1,7 +1,8 @@
-package org.example;
+package org.example.command;
+
+import org.example.tag.Tag;
 
 import java.util.PriorityQueue;
-import java.util.Set;
 
 public class Create implements Command {
     private final PriorityQueue<Tag> availableTags;
@@ -22,10 +23,11 @@ public class Create implements Command {
         // 가용태그목록은 출력에 쓰고, 처리에도 쓴다.
         // 그러니깐 사실 공용자원 인프라에 가깝다.
         // 그러니깐 Main에 선언하고 사용하는 게 좋다
+        Tag minTag = availableTags.poll();
+        if (minTag == null) {
+            return CommandResult.fail(Tag.getEmpty());
+        }
 
-
-
-
-        return null;
+        return CommandResult.success(Tag.getEmpty());
     }
 }

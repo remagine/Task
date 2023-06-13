@@ -1,12 +1,17 @@
 package org.example;
 
+import org.example.command.Command;
+import org.example.command.CommandFactory;
+import org.example.command.CommandResult;
+import org.example.command.CommandType;
+import org.example.tag.Tag;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -19,8 +24,13 @@ public class Main {
              InputStreamReader isr = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
              BufferedReader br = new BufferedReader(isr, 8192);
         ) {
+            // 인프라 객체들
             CommandFactory commandFactory = CommandFactory.getInstance();
+            PriorityQueue<Tag> availableTags = Tag.initAvailableTags();
+            Set<Tag> executableTags = Tag.initExecutableTags();
+
             while (true) {
+                // 입력처리
                 String line = br.readLine();
                 if (line == null) {
                     break;
@@ -31,7 +41,7 @@ public class Main {
                 }
 
                 CommandType commandType = null;
-                Tag tag = null;
+                Tag tag = Tag.getEmpty();
                 if (arguments.length == 2) {
                     String commandString = arguments[0];
                     commandType = CommandType.from(commandString);
@@ -44,16 +54,13 @@ public class Main {
                     commandType = CommandType.from(commandString);
                 }
 
-                // tag를 인자로 받아야 될까?
-                // 받는다면, tag가 없는 명령은 어떻게 될까 문제가 된다
-                // 받지 않는다면 tag는 어떻게 전달되야 하나?
-                // 팩토리가 받으면 좋겠다. 받아서 처리하는 경우, 아닌경우도 나눌 수 있겠다
-                // 인자가 너무 많은데? 4개는 너무 많다. 어떻게 줄이지?
-                // 그리고 어떤 인자는 어떤 command에만 필요한데 이렇게 매번 명령이 추가될때마다 인자도 추가되야한다.
-                // 이럴때는 어떤 패턴이 유리할까
-                // 일단 팩토리에 넣어주자
-                Command command = commandFactory.get(commandType, tag);
+
+                // 처리의 입력 생성
+                Command command = commandFactory.get(commandType, tag, availableTags, executableTags);
                 CommandResult commandResult = command.execute();
+
+                // 실패를 집계해야 하는데
+                // 집계는 누구의 책임인가? Tag?
 
 
             }
