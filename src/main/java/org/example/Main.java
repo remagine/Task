@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -28,6 +30,7 @@ public class Main {
             CommandFactory commandFactory = CommandFactory.getInstance();
             PriorityQueue<Tag> availableTags = Tag.initAvailableTags();
             Set<Tag> executableTags = Tag.initExecutableTags();
+            Map<Tag, Integer> FAIL_MAP = new HashMap<>();
 
             while (true) {
                 // 입력처리
@@ -57,6 +60,7 @@ public class Main {
                 // 처리의 입력 생성
                 Command command = commandFactory.get(commandType, tag, availableTags, executableTags);
                 CommandResult commandResult = command.execute();
+                commandResult.aggregate(FAIL_MAP);
 
                 // CommonResult 의 역할은? dto
                 // 실패를 집계해야 하는데

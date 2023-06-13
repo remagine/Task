@@ -2,6 +2,8 @@ package org.example.command;
 
 import org.example.tag.Tag;
 
+import java.util.Map;
+
 /**
  * dto
  * isSuccess : 실패 여부
@@ -37,5 +39,14 @@ public class CommandResult {
 
     public Tag getTag() {
         return tag;
+    }
+
+    public void aggregate(Map<Tag, Integer> FAIL_MAP) {
+        if(!isSuccess){
+            Integer failCnt = FAIL_MAP.putIfAbsent(tag, 1);
+            if (failCnt != null) {
+                FAIL_MAP.put(tag, ++failCnt);
+            }
+        }
     }
 }
